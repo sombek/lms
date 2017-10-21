@@ -123,7 +123,7 @@ function getStudent(){
 			name = $('a.dropdown-toggle','#essentialnavbar').text();
 			student.name = name.split(' ').slice(0,2).join(' ');
 			
-			console.log(student.name + ' resolved at '+ new Date().toLocaleString());
+			console.log(student.name + ' resolved at '+ new Date().toLocaleString(('de-DE', {hour: '2-digit',   hour12: false, timeZone: 'Asia/Riyadh' })));
 			
 			return resolve(student);
 		});//end of request
