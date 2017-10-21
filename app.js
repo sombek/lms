@@ -149,7 +149,6 @@ function getAtt(url) {
 						return reject('Some thing went wroung please check again');
 					}
 					var courseName =course[5].children[0].children[0].children[0].data;
-					console.log('taking attendace hours for :' + courseName);
 					$('tr','#region-main').each(function(){
 						Total_Absence=this.children[3].children[0].data;
 						if(Total_Absence!=null){
