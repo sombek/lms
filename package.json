@@ -7,9 +7,10 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "cheerio": "latest",
+    "cookie-parser": "^1.4.3",
     "express": "latest",
-    "request-promise": "^4.2.2",
     "express-session": "^1.15.6",
-    "cookie-parser": "^1.4.3"
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
   }
 }
