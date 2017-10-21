@@ -35,14 +35,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-/*
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});*/
-
 app.post('/', function(req, res, next) {
-	console.log('called');
 	function get(){
 		if(GlobalFlag==false){
 			form.username = req.body.user;
@@ -85,7 +78,6 @@ app.post('/', function(req, res, next) {
 
 function getStudent(){
 	return new Promise((resolve,reject)=>{
-		//GlobalFlag = true;
 		var formData = querystring.stringify(form);
 		var contentLength = formData.length;
 		request({
@@ -105,18 +97,17 @@ function getStudent(){
 			//error cases
 			if(err) {
 				console.log('rejected');
-				return reject(' Server Not Available');
+				return reject('Server Not Available');
 			}
 			if(res.statusCode === 503){
-				console.log('rejected');
+				console.log('rejected Database not available');
 				return reject('error: Database is not available');
 			}
 			if(res.headers.expires == ''){
-				console.log('rejected');
+				console.log('rejected Wroung Password Or Username');
 				return reject('error: Wroung Password Or Username');
 			}
 			
-			console.log('logged in succefully');
 			//Get body
 			$ = cheerio.load(body);
 			
@@ -132,7 +123,8 @@ function getStudent(){
 			name = $('a.dropdown-toggle','#essentialnavbar').text();
 			student.name = name.split(' ').slice(0,2).join(' ');
 			
-			console.log('student ' + student.name + ' resolved');
+			console.log(student.name + ' resolved at '+ new Date().toLocaleString());
+			
 			return resolve(student);
 		});//end of request
 	});//end of promise
@@ -153,7 +145,7 @@ function getAtt(url) {
 						course[5].children[0].children[0] === undefined ||
 						course[5].children[0].children[0].children[0] === undefined ||
 						course[5].children[0].children[0].children[0].data === undefined){
-						console.log('rejected');
+						console.log('rejected something undefined');
 						return reject('Some thing went wroung please check again');
 					}
 					var courseName =course[5].children[0].children[0].children[0].data;
