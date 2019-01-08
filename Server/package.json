@@ -1,0 +1,17 @@
+{
+  "name": "node-web-scrape",
+  "version": "0.0.1",
+  "description": "Scrape lms",
+  "main": "app.js",
+  "author": "Abdullah Hashim",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cheerio": "latest",
+    "cookie-parser": "^1.4.3",
+    "express": "latest",
+    "express-session": "^1.15.6",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "urllib": "^2.32.0"
+  }
+}

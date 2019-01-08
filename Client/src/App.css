@@ -1,0 +1,62 @@
+@import 'https://fonts.googleapis.com/css?family=Press+Start+2P';
+
+.caption {
+    font-size: 6pt;
+}
+
+.login-container {
+    height: 100%;
+}
+
+.login-container-loading {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.5); /*dim the background*/
+}
+
+.wrapper {
+    text-align: center;
+}
+
+.loading-container {
+    margin: 0;
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    width: 90%;
+    max-width: 200px;
+
+    background-color: white;
+    text-align: center;
+
+    z-index: 15;
+}
+
+.message {
+    width: 265px;
+    position: absolute !important;
+    bottom: 5px;
+    right: 20px;
+    background-color: lightcoral !important;
+    display: flex !important;
+}
+
+.App, #root {
+    height: 100%;
+    width: 100%;
+}
+
+.nes-table {
+    font-size: 8pt;
+}
