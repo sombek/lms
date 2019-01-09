@@ -1,3 +1,7 @@
+body, code, html, kbd, pre, samp {
+    font-family: Press Start\ 2P !important;
+}
+
 .caption {
     font-size: 6pt;
 }
