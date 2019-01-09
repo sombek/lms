@@ -13,8 +13,8 @@ class App extends Component {
         user: '',
         password: '',
         showLoading: false,
-        student: undefined,
-        error: undefined,
+        student: false,
+        error: false,
     };
 
     fetchData = () => {
