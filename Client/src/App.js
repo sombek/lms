@@ -19,7 +19,7 @@ class App extends Component {
 
     fetchData = () => {
         this.setState({showLoading: true});
-        axios.post(`http://localhost:4000`, {
+        axios.post(`http://updullah.me:4000`, {
             user: this.state.user,
             password: this.state.password
         }).then(res => {
