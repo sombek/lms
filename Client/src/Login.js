@@ -18,7 +18,7 @@ class Login extends Component {
                         <div className={'wrapper'}>
                             <img
                                 src="https://thumbs.gfycat.com/HopefulShockedBarracuda-small.gif"
-                                width={150}/>
+                                width={100}/>
                         </div>
 
                         <div className="nes-field">

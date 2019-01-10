@@ -3,7 +3,7 @@ import './App.css';
 import 'nes.css/css/nes.min.css'
 
 import axios from 'axios';
-import Login from "./Login";
+import Login from './Login'
 import Results from "./Results";
 
 
@@ -46,6 +46,7 @@ class App extends Component {
     render() {
         return (
             <div className={`App`}>
+
                 {
                     this.state.student ?
                         <Results student={this.state.student}
@@ -58,16 +59,16 @@ class App extends Component {
 
                 }
 
-                {/*<div className="nes-balloon from-right message" hidden={!this.state.error}>*/}
-                    {/*<p>*/}
-                        {/*{this.state.error}*/}
-                        {/*<img src="https://orig00.deviantart.net/f028/f/2014/221/5/4/signal_by_pavanz-d7uhv5q.gif"*/}
-                             {/*width={100}/>*/}
-                    {/*</p>*/}
-                    {/*<div style={{textAlign: 'right'}}>*/}
-                        {/*<button type="button" className="nes-btn is-error" onClick={this.closeMessage}>X</button>*/}
-                    {/*</div>*/}
-                {/*</div>*/}
+                <div className="nes-balloon from-right message" hidden={!this.state.error}>
+                    <p>
+                        {this.state.error}
+                        <img src="https://orig00.deviantart.net/f028/f/2014/221/5/4/signal_by_pavanz-d7uhv5q.gif"
+                             width={100}/>
+                    </p>
+                    <div style={{textAlign: 'right'}}>
+                        <button type="button" className="nes-btn is-error" onClick={this.closeMessage}>X</button>
+                    </div>
+                </div>
             </div>
         );
     }
