@@ -14,6 +14,13 @@ body, code, html, kbd, pre, samp {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
+.nes-input, .nes-textarea {
+    -moz-box-shadow: 0 4px #212529, 0 -4px #212529, 4px 0 #212529, -4px 0 #212529;
+    -webkit-box-shadow: 0 4px #212529, 0 -4px #212529, 4px 0 #212529, -4px 0 #212529;
+    box-shadow: 0 4px #212529, 0 -4px #212529, 4px 0 #212529, -4px 0 #212529;
+}
+
+
 .overlay {
     position: absolute;
     top: 0;
