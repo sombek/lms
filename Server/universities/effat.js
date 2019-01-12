@@ -27,7 +27,10 @@ module.exports = {
             if (err) return reject('Server Not Available');
             // if (res.statusCode === 503) return reject('error: Database is not available');
             let $ = cheerio.load(body);
-            if ($("#loginErrorMessage").children()) return reject('error: Wrong Password Or Username');
+            if ($("#loginErrorMessage")[0])
+                if ($("#loginErrorMessage")[0].children[0])
+                    if ($("#loginErrorMessage")[0].children[0].data)
+                        return reject('error: Wrong Password Or Username');
 
             let student = {
                 //Add the cookieJar for each student
