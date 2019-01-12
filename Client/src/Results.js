@@ -23,7 +23,7 @@ class Results extends Component {
     ];
 
     render() {
-        const {name, results} = this.props.student;
+        const {name, results, university} = this.props.student;
         const img = this.loadingImages[Math.floor(Math.random() * this.loadingImages.length)];
         return (
             <>
@@ -39,22 +39,47 @@ class Results extends Component {
                     <div className="nes-table-responsive table">
                         <table className="nes-table is-bordered is-centered">
                             <thead>
-                            <tr>
-                                <th>Course</th>
-                                <th>Hours</th>
-                                <th>%</th>
-                            </tr>
+
+                            {
+                                university === "EFFAT" ? (
+                                    <tr>
+                                        <th style={{width: '40%'}}>Course</th>
+                                        <th>P</th>
+                                        <th>A</th>
+                                        <th>L</th>
+                                        <th>E</th>
+                                        <th>U</th>
+                                    </tr>
+                                ) : (
+                                    <tr>
+                                        <th>Course</th>
+                                        <th>Hours</th>
+                                        <th>%</th>
+                                    </tr>
+                                )
+                            }
                             </thead>
 
                             <tbody>
                             {
-                                results.map((item, i) =>
-                                    <tr key={i}>
-                                        <td>{item.courseName}</td>
-                                        <td>{item.hours}</td>
-                                        <td>{item.percentage}</td>
-                                    </tr>
-                                )
+                                university === "EFFAT" ?
+                                    results.map((item, i) =>
+                                        <tr key={i}>
+                                            <td>{item.courseName}</td>
+                                            <td>{item.present}</td>
+                                            <td>{item.absent}</td>
+                                            <td>{item.late}</td>
+                                            <td>{item.excused}</td>
+                                            <td>{item.unexcused}</td>
+                                        </tr>
+                                    ) :
+                                    results.map((item, i) =>
+                                        <tr key={i}>
+                                            <td>{item.courseName}</td>
+                                            <td>{item.hours}</td>
+                                            <td>{item.percentage}</td>
+                                        </tr>
+                                    )
                             }
                             </tbody>
                         </table>

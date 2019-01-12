@@ -12,6 +12,7 @@ class App extends Component {
     state = {
         user: '',
         password: '',
+        university: '',
         showLoading: false,
         student: false,
         error: false,
@@ -19,11 +20,12 @@ class App extends Component {
     };
 
     fetchData = () => {
-        if (this.state.user && this.state.password)
+        if (this.state.user && this.state.password && this.state.university)
             this.setState({showLoading: true}, () => {
-                axios.post(`http://updullah.me:4000`, {
+                axios.post(`http://localhost:4000`, {
                     user: this.state.user,
-                    password: this.state.password
+                    password: this.state.password,
+                    university: this.state.university
                 }).then(res => {
                     if (res.data.err)
                         this.setState({
@@ -54,7 +56,7 @@ class App extends Component {
             this.setState({
                 showLoading: false,
                 showError: true,
-                error: "Username & Password is required",
+                error: "Username & Password & University are required",
             })
 
     };
@@ -63,6 +65,13 @@ class App extends Component {
     updatePassword = (event) => this.setState({password: event.target.value});
 
     closeMessage = () => this.setState({showError: false, error: ''});
+
+    setUni = (event) => {
+        if (event.target) {
+            console.log(event.target.value);
+            this.setState({university: event.target.value});
+        }
+    };
 
     reset = () => this.setState({student: undefined});
 
@@ -79,6 +88,7 @@ class App extends Component {
                                  updatePassword={this.updatePassword}
                                  username={this.state.user}
                                  password={this.state.password}
+                                 setUni={this.setUni}
                                  fetchData={this.fetchData}
                                  showLoading={this.state.showLoading}/>
 

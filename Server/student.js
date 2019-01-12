@@ -1,12 +1,14 @@
-const querystring = require('querystring');
-const request = require('request-promise');
 const rcyci = require('./universities/rcyci');
+const effat = require('./universities/effat');
 
 module.exports = {
-    getStudent: (form) => {
-        const cookieJar = request.jar();
-        const formData = querystring.stringify(form);
-        return rcyci.getFromRcyci(cookieJar, formData)
+    getStudent: (reqBody) => {
+        switch (reqBody.university) {
+            case "RCYCI":
+                return rcyci.getFromRcyci(reqBody);
+            case "EFFAT":
+                return effat.getFromEffat(reqBody)
+        }
     }
 };
 

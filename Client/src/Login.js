@@ -21,6 +21,24 @@ class Login extends Component {
                                 width={100} alt={'gif'}/>
                         </div>
 
+                        <section className="nes-container with-title">
+                            <h2 className="title">Select Uni</h2>
+                            <div>
+                                <label>
+                                    <input type="radio" className="nes-radio" name={'university'} value={'RCYCI'}
+                                           onChange={this.props.setUni.bind(this)}/>
+                                    <span>RCYCI</span>
+                                </label>
+                                <br/>
+                                <label>
+                                    <input type="radio" className="nes-radio" name={'university'} value={'EFFAT'}
+                                           onChange={this.props.setUni.bind(this)}/>
+                                    <span>EFFAT</span>
+                                </label>
+                            </div>
+                        </section>
+
+
                         <div className="nes-field">
                             <label htmlFor="name_field">Username</label>
                             <input type="text" onChange={this.props.updateUsername} value={this.props.username}

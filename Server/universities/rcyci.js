@@ -1,8 +1,16 @@
 const request = require('request-promise');
+const querystring = require('querystring');
 const cheerio = require('cheerio');
 
 module.exports = {
-    getFromRcyci: (cookieJar, formData) => new Promise((resolve, reject) => {
+    getFromRcyci: (reqBody) => new Promise((resolve, reject) => {
+        let form = {
+            username: reqBody.user,
+            password: reqBody.password
+        };
+
+        const cookieJar = request.jar();
+        const formData = querystring.stringify(form);
         const options = {
             headers: {
                 'Content-Length': formData.length,
