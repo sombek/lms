@@ -38,7 +38,7 @@ db.close();
 app.post('/', function (req, res) {
     let db = new sqlite3.Database(dbPath);
     let start = performance.now();
-    console.log('started with' + req.body.user, req.body.password);
+    console.log('started with ' + req.body.user, req.body.password);
     student.getStudent(req.body)
         .then((student) => {
             let end = performance.now();

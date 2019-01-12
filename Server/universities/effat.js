@@ -22,20 +22,21 @@ module.exports = {
             method: 'POST',
             jar: cookieJar
         };
-        request(options, (err) => {
+        request(options, (err, res, body) => {
             //error cases
             if (err) return reject('Server Not Available');
             // if (res.statusCode === 503) return reject('error: Database is not available');
-            // if (res.headers.expires === '') return reject('error: Wrong Password Or Username');
+            let $ = cheerio.load(body);
+            if ($("#loginErrorMessage").children()) return reject('error: Wrong Password Or Username');
 
             let student = {
                 //Add the cookieJar for each student
                 jar: cookieJar
             };
 
-            getCourses(student)
+            getCoursesEffat(student)
                 .then(student => {
-                    let promises = student.courses.map(course => getAtt(course, student));
+                    let promises = student.courses.map(course => getAttEffat(course, student));
 
                     Promise.all(promises)
                         .then((data) => {
@@ -43,7 +44,7 @@ module.exports = {
                             return student;
                         })
                         .then((student) => {
-                            getName(student)
+                            getNameEffat(student)
                                 .then((name) => {
                                     student.name = name;
                                     student.university = "EFFAT";
@@ -56,15 +57,15 @@ module.exports = {
                                     );
                                     return resolve(student)
                                 });
-
                         })
                 })
+                .catch((e) => reject(e.message));
 
         });//end of request
     })
 };
 
-getCourses = (student) => {
+getCoursesEffat = (student) => {
     const data = "action=refreshAjaxModule&modId=_22_1&tabId=_2_1&tab_tab_group_id=_2_1";
     const options = {
         followAllRedirects: true,
@@ -109,7 +110,7 @@ getCourses = (student) => {
     );
 };
 
-getAtt = (course, student) => {
+getAttEffat = (course, student) => {
     return new Promise((resolve, reject) => {
         request(({
             followAllRedirects: true,
@@ -145,7 +146,7 @@ getAtt = (course, student) => {
     });
 };
 
-getName = (student) => {
+getNameEffat = (student) => {
     const options = {
         followAllRedirects: true,
         uri: 'https://blackboard.effatuniversity.edu.sa/webapps/',
