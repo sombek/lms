@@ -74,13 +74,18 @@ getAtt = (url, student) => {
             let courseName = course[5].children[0].children[0].children[0].data;
             $('tr', '#region-main').each(function () {
                 let Total_Absence = this.children[3].children[0].data;
+                let Total_Absence_Percentage = this.children[5];
+                if (Total_Absence_Percentage)
+                    Total_Absence_Percentage = Total_Absence_Percentage.children[0].data;
+
                 if (Total_Absence != null) {
                     if (Total_Absence.indexOf('Hours') !== -1) {
                         for (let i = 0; i < student.courses.length; i++) {
                             if (student.courses[i].includes(courseName.split(' ').slice(0, 1))) {
                                 let attendance_object = {
                                     courseName: courseName,
-                                    attendance: Total_Absence
+                                    hours: Total_Absence,
+                                    percentage: Total_Absence_Percentage
                                 };
                                 return resolve(attendance_object);
                             }

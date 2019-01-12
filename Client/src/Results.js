@@ -34,7 +34,7 @@ class Results extends Component {
                         <img
                             src={img.url}
                             width={img.width}
-                            height={100}/>
+                            height={100} alt={'gif'}/>
                     </div>
                     <div className="nes-table-responsive table">
                         <table className="nes-table is-bordered is-centered">
@@ -42,6 +42,7 @@ class Results extends Component {
                             <tr>
                                 <th>Course</th>
                                 <th>Hours</th>
+                                <th>%</th>
                             </tr>
                             </thead>
 
@@ -50,7 +51,8 @@ class Results extends Component {
                                 results.map((item, i) =>
                                     <tr key={i}>
                                         <td>{item.courseName}</td>
-                                        <td>{item.attendance}</td>
+                                        <td>{item.hours}</td>
+                                        <td>{item.percentage}</td>
                                     </tr>
                                 )
                             }

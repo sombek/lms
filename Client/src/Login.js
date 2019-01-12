@@ -14,19 +14,21 @@ class Login extends Component {
                     <h2 className="title">Login Page</h2>
                     <div className="containers">
 
-                        <h6>Please Enter your info to see the attendance</h6>
+                        <h6>Attendance Checker Application</h6>
                         <div className={'wrapper'}>
                             <img
                                 src="https://thumbs.gfycat.com/HopefulShockedBarracuda-small.gif"
-                                width={100}/>
+                                width={100} alt={'gif'}/>
                         </div>
 
                         <div className="nes-field">
                             <label htmlFor="name_field">Username</label>
-                            <input type="text" onChange={this.props.updateUsername} className="nes-input"/>
+                            <input type="text" onChange={this.props.updateUsername} value={this.props.username}
+                                   className="nes-input"/>
 
                             <label htmlFor="name_field">Password</label>
-                            <input type="password" onChange={this.props.updatePassword} className="nes-input"/>
+                            <input type="password" onChange={this.props.updatePassword} value={this.props.password}
+                                   className="nes-input"/>
                         </div>
 
                         <br/>

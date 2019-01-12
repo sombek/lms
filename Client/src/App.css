@@ -77,3 +77,7 @@ body, code, html, kbd, pre, samp {
     margin-bottom: 10px;
     overflow-y: auto !important;
 }
+
+.hidden {
+    display: none !important;
+}
