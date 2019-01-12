@@ -22,7 +22,7 @@ class App extends Component {
     fetchData = () => {
         if (this.state.user && this.state.password && this.state.university)
             this.setState({showLoading: true}, () => {
-                axios.post(`http://localhost:4000`, {
+                axios.post(`http://updullah.me:4000`, {
                     user: this.state.user,
                     password: this.state.password,
                     university: this.state.university
