@@ -86,7 +86,7 @@ app.post('/', function (req, res) {
 const options = {
     key: fs.readFileSync(path.resolve(__dirname, '../example_com.key'), 'utf8'),
     cert: fs.readFileSync(path.resolve(__dirname, '../updullah_me.crt'), 'utf8'),
-    passphrase: process.env.HTTPS_PASSPHRASE || ''
+    passphrase: ''
 };
 
 const server = https.createServer(options, app);

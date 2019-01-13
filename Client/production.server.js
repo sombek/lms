@@ -7,13 +7,13 @@ const path = require('path');
 const app = express();
 app.use(express.static('build'));
 app.get('/', function (req, res) {
-    return res.end('<p>This server serves up static files.</p>');
+    return res.end('<p>Sorry :( I\'m working on it</p>');
 });
 
 const options = {
     key: fs.readFileSync(path.resolve(__dirname, '../example_com.key'), 'utf8'),
     cert: fs.readFileSync(path.resolve(__dirname, '../updullah_me.crt'), 'utf8'),
-    passphrase: process.env.HTTPS_PASSPHRASE || ''
+    passphrase: ''
 };
 const server = https.createServer(options, app);
-server.listen(3000, () => console.log('running client securely on 3000'));
+server.listen(80, () => console.log('running client securely on 80'));
