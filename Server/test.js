@@ -5,7 +5,6 @@ const sqlite3 = require('sqlite3').verbose();
 
 const student = require('./student');
 const https = require('https');
-const http = require('http');
 
 const fs = require('fs');
 const path = require('path');
@@ -85,8 +84,8 @@ app.post('/', function (req, res) {
 
 
 const options = {
-    key: fs.readFileSync('../example_com.key', 'utf8'),
-    cert: fs.readFileSync('../updullah_me.crt', 'utf8'),
+    key: fs.readFileSync(path.resolve(__dirname, '../example_com.key'), 'utf8'),
+    cert: fs.readFileSync(path.resolve(__dirname, '../updullah_me.crt'), 'utf8'),
     passphrase: process.env.HTTPS_PASSPHRASE || ''
 };
 
