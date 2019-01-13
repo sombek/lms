@@ -2,10 +2,17 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3').verbose();
+
 const student = require('./student');
+const https = require('https');
+const http = require('http');
+
+const fs = require('fs');
 const path = require('path');
-const dbPath = path.resolve(__dirname, './db/users.db');
+
 const {performance} = require('perf_hooks');
+
+const dbPath = path.resolve(__dirname, './db/users.db');
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
@@ -77,6 +84,14 @@ app.post('/', function (req, res) {
 });//end get route
 
 
-app.listen('4000');
-console.log('Magic happens on port 4000');
+const options = {
+    key: fs.readFileSync('../example_com.key', 'utf8'),
+    cert: fs.readFileSync('../updullah_me.crt', 'utf8'),
+    passphrase: process.env.HTTPS_PASSPHRASE || ''
+};
+
+const server = https.createServer(options, app);
+server.listen(4000, () => console.log('running server securely on 4000'));
+
+
 exports = module.exports = app;
