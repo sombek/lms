@@ -12,7 +12,7 @@ class App extends Component {
     state = {
         user: '',
         password: '',
-        university: '',
+        university: 'EFFAT',
         showLoading: false,
         student: false,
         error: false,
