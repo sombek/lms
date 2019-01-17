@@ -20,7 +20,6 @@ module.exports = {
             },
             followAllRedirects: true,
             uri: 'http://sis.rcyci.edu.sa/psp/ps/EMPLOYEE/HRMS?cmd=login&languageCd=ENG',
-            // uri: 'https://sis.iau.edu.sa/psc/hcs9prd/?cmd=login&amp;languageCd=ENG',
             body: formData,
             method: 'POST',
             jar: cookieJar,
@@ -39,6 +38,7 @@ module.exports = {
             //         if ($("#loginErrorMessage")[0].children[0].data)
             //             return reject('error: Wrong Password Or Username');
 
+
             let student = {
                 //Add the cookieJar for each student
                 jar: cookieJar
@@ -46,28 +46,28 @@ module.exports = {
 
             getCoursesRCYCI_SIS(student)
                 .then(student => {
-                    let promises = student.courses.map(course => getAttEffat(course, student));
+                    getAttRCYCI_SIS(student)
+                        .then((courses) => {
+                            student.results = [];
+                            for (const course of courses)
+                                for (const stu_course of student.courses)
+                                    if (course.course_name === stu_course.courseName)
+                                        student.results.push({
+                                            courseName: stu_course.courseName,
+                                            percentage: course.precentage,
+                                            hours: course.count
+                                        });
+                                    else
+                                        student.results.push({
+                                            courseName: stu_course.courseName,
+                                            percentage: 0,
+                                            hours: 0
+                                        });
 
-                    Promise.all(promises)
-                        .then((data) => {
-                            student.results = data;
-                            return student;
+                            student.university = "RCYCI";
+                            return resolve(student);
                         })
-                        .then((student) => {
-                            getNameEffat(student)
-                                .then((name) => {
-                                    student.name = name;
-                                    student.university = "EFFAT";
-                                    console.log(student.name + ' resolved at '
-                                        + new Date().toLocaleString(('de-DE', {
-                                                hour: '2-digit', hour12: false,
-                                                timeZone: 'Asia/Riyadh'
-                                            })
-                                        ) + " From effat university"
-                                    );
-                                    return resolve(student)
-                                });
-                        })
+                        .catch((e) => reject(e));
                 })
                 .catch((e) => reject(e.message));
 
@@ -76,14 +76,18 @@ module.exports = {
 };
 
 getCoursesRCYCI_SIS = (student) => {
-    // const data = "action=refreshAjaxModule&modId=_22_1&tabId=_2_1&tab_tab_group_id=_2_1";
     const options = {
         followAllRedirects: true,
         headers: {
             'User-Agent': 'Mozilla/5.0'
         },
-        uri: 'http://sis.rcyci.edu.sa/psp/ps/EMPLOYEE/PSFT_HR/c/UD_ATEND_PERCNT_MENU.UD_ATEND_PERCNT_CM.GBL?FolderPath=PORTAL_ROOT_OBJECT.CO_EMPLOYEE_SELF_SERVICE.UODA_SERVICES.UOD_OTHERS.UD_ATEND_PERCNT_CM_GBL&IsFolder=false&IgnoreParamTempl=FolderPath%2cIsFolder',
-        // body: data,
+        uri: 'http://sis.rcyci.edu.sa/psc/ps/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSR_SSENRL_LIST.GBL',
+        qs: {
+            IsFolder: "false",
+            ACAD_CAREER: "UGRD",
+            INSTITUTION: "RCYCI",
+            STRM: "2182",
+        },
         method: 'GET',
         jar: student.jar
     };
@@ -92,23 +96,21 @@ getCoursesRCYCI_SIS = (student) => {
             if (err) return reject('Can\'t get courses');
 
             try {
-                console.log(body);
                 let student_courses = [];
 
                 const $ = cheerio.load(body);
-                const courses = $('li');
+                const courses = $('.PAGROUPDIVIDER');
+                const name = $('#DERIVED_SSTSNAV_PERSON_NAME')[0].children[0].data.split(' ').slice(0, 2).join(' ');
 
                 courses.each((i, course) => {
-                    let courseName = course.children[3].children[0].data;
-                    let courseLink = course.children[3].attribs.href;
-                    if (courseName.includes(currentSemesterCode))
-                        student_courses.push({
-                            courseName: courseName.substring(0, courseName.indexOf(':')).replace(currentSemesterCode, ''),
-                            courseID: getJsonFromUrl(courseLink).id
-                        })
+                    let courseName = course.children[0].data;
+                    student_courses.push({
+                        courseName: courseName.substring(0, courseName.indexOf('-')).trim()
+                    })
                 });
 
                 student.courses = student_courses;
+                student.name = name;
                 return resolve(student)
             }
             catch (e) {
@@ -119,11 +121,19 @@ getCoursesRCYCI_SIS = (student) => {
     );
 };
 
-getAttEffat = (course, student) => {
+getAttRCYCI_SIS = (student) => {
     return new Promise((resolve, reject) => {
         request(({
             followAllRedirects: true,
-            uri: `https://blackboard.effatuniversity.edu.sa/webapps/BU02-attendance-BBLEARN/links/tool.jsp?course_id=${course.courseID}&mode=view`,
+            headers: {
+                'User-Agent': 'Mozilla/5.0'
+            },
+            uri: 'http://sis.rcyci.edu.sa/psc/ps/EMPLOYEE/HRMS/c/RCY_STD_ATTEND.RCY_STD_ATTEND.GBL',
+            qs: {
+                FolderPath: "PORTAL_ROOT_OBJECT.CO_EMPLOYEE_SELF_SERVICE.RCY_STD_ATTEND_GBL",
+                IsFolder: 'false',
+                IgnoreParamTempl: "FolderPath,IsFolder"
+            },
             method: 'GET',
             jar: student.jar
         }), (err, res, body) => {
@@ -131,62 +141,43 @@ getAttEffat = (course, student) => {
                 return reject('Something went wrong');
 
             let $ = cheerio.load(body);
-            const containerdiv = $('#containerdiv').find('center')[2];
-            if (containerdiv === undefined ||
-                containerdiv.children[0] === undefined ||
-                containerdiv.children[0].children[0] === undefined ||
-                containerdiv.children[0].children[0].children[1] === undefined ||
-                containerdiv.children[0].children[0].children[1].children === undefined) {
-                return reject('Some thing went wrong please check again');
+
+
+            let counter = 0;
+            let courseText = '';
+            let courseCode = '';
+            let precentage = '';
+            let count = '';
+            let attendance_courses = [];
+            try {
+                const rows = $(".PSLEVEL1GRIDWBO")[0].children[1].children[2].children[0].children[1].children[1].children;
+                for (const row of rows) {
+                    if (row.children)
+                        for (const record of row.children) {
+                            if (record.name === "td" && record.type === "tag" && record.children[1]) {
+                                if (counter === 2)
+                                    courseText = record.children[1].children[0].children[0].data;
+                                if (counter === 3)
+                                    courseCode = record.children[1].children[0].children[0].data;
+                                if (counter === 5)
+                                    precentage = record.children[1].children[0].children[0].data;
+                                if (counter === 6) {
+                                    count = record.children[1].children[0].children[0].data;
+                                    attendance_courses.push({
+                                        course_name: courseText + ' ' + courseCode,
+                                        precentage: precentage,
+                                        count: count
+                                    })
+                                }
+                                counter++;
+                            }
+                        }
+                }
+                return resolve(attendance_courses);
+            } catch (e) {
+                return reject(e.message + ', Some thing went wrong please check again');
             }
-
-            let attendance_numbers = containerdiv.children[0].children[0].children[1].children;
-
-            let attendance_object = {
-                courseName: course.courseName,
-                present: attendance_numbers[1].children[0].data,
-                absent: attendance_numbers[2].children[0].data,
-                late: attendance_numbers[3].children[0].data,
-                excused: attendance_numbers[4].children[0].data,
-                unexcused: attendance_numbers[5].children[0].data,
-            };
-            return resolve(attendance_object);
         });
     });
 };
-
-getNameEffat = (student) => {
-    const options = {
-        followAllRedirects: true,
-        uri: 'https://blackboard.effatuniversity.edu.sa/webapps/',
-        method: 'GET',
-        jar: student.jar
-    };
-    return new Promise((resolve, reject) =>
-        request(options, (err, res, body) => {
-            if (err) return reject('Can\'t get name');
-            try {
-                let $ = cheerio.load(body);
-                let name = $('#global-nav-link')[0].children[1].data;
-                return resolve(name)
-            }
-            catch (e) {
-                return reject('Can\'t get name');
-            }
-
-        })
-    );
-};
-
-
-function getJsonFromUrl(url) {
-    if (!url) url = location.search;
-    let query = url.substr(1);
-    let result = {};
-    query.split("&").forEach(function (part) {
-        var item = part.split("=");
-        result[item[0]] = decodeURIComponent(item[1]);
-    });
-    return result;
-}
 
