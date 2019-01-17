@@ -45,7 +45,7 @@ module.exports = {
             };
 
 
-            Promise.all([getFromRcyci(reqBody), getAttRCYCI_SIS(student)])
+            Promise.all([getFromRcyci(reqBody), getAttRCYCI_SIS(student), getCoursesRCYCI_SIS(student)])
                 .then((values) => {
                     student.results = [];
                     student.courses = values[0].courses;
@@ -55,24 +55,25 @@ module.exports = {
                     courses = courses.map((course) => {
                         return {
                             courseName: course.course_name.split(' ').join(''),
-                            count: course.count,
+                            hours: course.count,
                             percentage: course.precentage
                         }
                     });
 
                     let unique_courses = courses;
-
+                    courses = courses.map((course) => course.courseName);
                     for (const stu_course of student.courses)
                         if (!courses.includes(stu_course))
                             unique_courses.push({
                                 courseName: stu_course,
-                                count: 0,
+                                hours: 0,
                                 percentage: 0
                             });
                     unique_courses = unique_courses.filter((course) => course.courseName.charCodeAt(0) !== 160);
 
                     student.results = unique_courses;
                     student.university = "RCYCI";
+                    student.name = values[2].name;
                     return resolve(student);
                 })
                 .catch((e) => reject(e));
