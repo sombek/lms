@@ -49,11 +49,8 @@ app.post('/', function (req, res) {
         .then((student) => {
             let end = performance.now();
             let travel_time = ((end - start) / 1000).toFixed(2);
-            let request_date = new Date().toLocaleString(('de-DE', {
-                    hour: '2-digit', hour12: false,
-                    timeZone: 'Asia/Riyadh'
-                })
-            );
+            let request_date = new Date().toLocaleString('en-US', {timeZone: "Asia/Riyadh"});
+
             db.serialize(function () {
                 db.run(`
                     INSERT INTO students (
