@@ -50,19 +50,26 @@ module.exports = {
                         .then((courses) => {
                             student.results = [];
                             for (const course of courses)
-                                for (const stu_course of student.courses)
-                                    if (course.course_name === stu_course.courseName)
-                                        student.results.push({
-                                            courseName: stu_course.courseName,
-                                            percentage: course.precentage,
-                                            hours: course.count
-                                        });
-                                    else
-                                        student.results.push({
-                                            courseName: stu_course.courseName,
-                                            percentage: 0,
-                                            hours: 0
-                                        });
+                                if (student.courses[0])
+                                    for (const stu_course of student.courses)
+                                        if (course.course_name === stu_course.courseName)
+                                            student.results.push({
+                                                courseName: stu_course.courseName,
+                                                percentage: course.precentage,
+                                                hours: course.count
+                                            });
+                                        else
+                                            student.results.push({
+                                                courseName: stu_course.courseName,
+                                                percentage: 0,
+                                                hours: 0
+                                            });
+                                else
+                                    student.results.push({
+                                        courseName: course.course_name,
+                                        percentage: course.precentage,
+                                        hours: course.count
+                                    });
 
                             student.university = "RCYCI";
                             return resolve(student);
@@ -152,7 +159,7 @@ getAttRCYCI_SIS = (student) => {
             try {
                 const rows = $(".PSLEVEL1GRIDWBO")[0].children[1].children[2].children[0].children[1].children[1].children;
                 for (const row of rows) {
-                    if (row.children)
+                    if (row.children || row.type !== "text")
                         for (const record of row.children) {
                             if (record.name === "td" && record.type === "tag" && record.children[1]) {
                                 if (counter === 2)
@@ -172,6 +179,7 @@ getAttRCYCI_SIS = (student) => {
                                 counter++;
                             }
                         }
+                    counter = 0
                 }
                 return resolve(attendance_courses);
             } catch (e) {
