@@ -44,41 +44,39 @@ module.exports = {
                 jar: cookieJar
             };
 
-            getCoursesRCYCI_SIS(student)
-                .then(student => {
-                    getAttRCYCI_SIS(student)
-                        .then((courses) => {
-                            student.results = [];
-                            for (const course of courses)
-                                if (student.courses[0])
-                                    for (const stu_course of student.courses)
-                                        if (course.course_name === stu_course.courseName)
-                                            student.results.push({
-                                                courseName: stu_course.courseName,
-                                                percentage: course.precentage,
-                                                hours: course.count
-                                            });
-                                        else
-                                            student.results.push({
-                                                courseName: stu_course.courseName,
-                                                percentage: 0,
-                                                hours: 0
-                                            });
-                                else
-                                    student.results.push({
-                                        courseName: course.course_name,
-                                        percentage: course.precentage,
-                                        hours: course.count
-                                    });
 
-                            student.university = "RCYCI";
-                            return resolve(student);
-                        })
-                        .catch((e) => reject(e));
+            Promise.all([getFromRcyci(reqBody), getAttRCYCI_SIS(student)])
+                .then((values) => {
+                    student.results = [];
+                    student.courses = values[0].courses;
+                    let courses = values[1];
+
+                    student.courses = student.courses.map((course) => course.split('-')[0]);
+                    courses = courses.map((course) => {
+                        return {
+                            courseName: course.course_name.split(' ').join(''),
+                            count: course.count,
+                            percentage: course.precentage
+                        }
+                    });
+
+                    let unique_courses = courses;
+
+                    for (const stu_course of student.courses)
+                        if (!courses.includes(stu_course))
+                            unique_courses.push({
+                                courseName: stu_course,
+                                count: 0,
+                                percentage: 0
+                            });
+                    unique_courses = unique_courses.filter((course) => course.courseName.charCodeAt(0) !== 160);
+
+                    student.results = unique_courses;
+                    student.university = "RCYCI";
+                    return resolve(student);
                 })
-                .catch((e) => reject(e.message));
-
-        });//end of request
+                .catch((e) => reject(e));
+        })
     })
 };
 
@@ -189,3 +187,55 @@ getAttRCYCI_SIS = (student) => {
     });
 };
 
+getFromRcyci = (reqBody) => new Promise((resolve, reject) => {
+    let form = {
+        username: reqBody.user,
+        password: reqBody.password
+    };
+
+    const cookieJar = request.jar();
+    const formData = querystring.stringify(form);
+    const options = {
+        headers: {
+            'Content-Length': formData.length,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        followAllRedirects: true,
+        uri: 'http://lms.yic.edu.sa/moodle/login/index.php',
+        body: formData,
+        method: 'POST',
+        jar: cookieJar
+    };
+    request(options, (err, res, body) => {
+        //error cases
+        if (err) return reject('Server Not Available');
+        if (res.statusCode === 503) return reject('error: Database is not available');
+        if (res.headers.expires === '') return reject('error: Wrong Password Or Username');
+
+        //Get body
+        const $ = cheerio.load(body);
+        return resolve(getCourses($));
+    });//end of request
+});
+
+
+getCourses = ($) => {
+    let titles = $('h4', '#region-main .rc_box');
+    let student = {
+        name: '',
+        courses: [],
+        links: []
+    };
+    titles.each((i, node) => {
+        try {
+            let course = node.children[0].data;
+            student.courses.push(course);
+            let url = node.parent.parent.children[1].children[0].children[0].children[0].children[1].children[0].attribs.href + '&tab=attendance&att_week=1';
+            student.links.push(url);
+        } catch (e) {
+            console.error('Error while parsing the homepage to get the courses and links');
+            return new Error('Error while parsing the homepage to get the courses and links');
+        }
+    });
+    return student;
+};
