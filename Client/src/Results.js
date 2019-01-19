@@ -9,25 +9,40 @@ class Results extends Component {
             width: 100
         },
         {
-            url: 'http://img.ifcdn.com/images/3e413c4dd0bbe140681f191854c39aaeee9c8b4aab9fa7e1151d4ad7e265c289_1.gif',
-            width: 200
-        },
-        {
             url: 'http://rs794.pbsrc.com/albums/yy222/toystoryftw/Misc%20Toy%20Story/1385242ovj38uen07.gif~c200',
             width: 100
         },
         {
             url: 'https://www.gifmania.co.uk/Walt-Disney-Animated-Gifs/Animated-Pixar-Movies/Toy-Story/Buzz-Little-Green-Men-82984.gif',
             width: 100
+        }, {
+            url: 'https://media.giphy.com/media/MQWqYabCLWEtW/giphy.gif',
+            width: 150
+        }, {
+            url: 'https://media.giphy.com/media/rOEvmLAxxcE1i/giphy.gif',
+            width: 150
+        }, {
+            url: 'https://media.giphy.com/media/gisoxd5IYmUMM/giphy.gif',
+            width: 150
+        }, {
+            url: 'https://media.giphy.com/media/xUOwGpCYAioBj5RQQg/giphy.gif',
+            width: 180
+        }, {
+            url: 'https://media.giphy.com/media/dEdmW17JnZhiU/giphy.gif',
+            width: 180
+        }, {
+            url: 'https://media.giphy.com/media/eKDp7xvUdbCrC/giphy.gif',
+            width: 180
         },
     ];
 
     render() {
         const {name, results, university} = this.props.student;
         const img = this.loadingImages[Math.floor(Math.random() * this.loadingImages.length)];
+        // const img = this.loadingImages[8];
         return (
             <>
-                <section className="nes-container with-title login-container">
+                <section className="nes-container with-title login-container results">
                     <h6 className="title" style={{marginBottom: 0}}>{name}</h6>
 
                     <div className={'wrapper'}>
@@ -52,7 +67,7 @@ class Results extends Component {
                                     </tr>
                                 ) : (
                                     <tr>
-                                        <th>Course</th>
+                                        <th style={{width: '40%'}}>Course</th>
                                         <th>Hours</th>
                                         <th>%</th>
                                     </tr>
@@ -85,8 +100,9 @@ class Results extends Component {
                         </table>
                     </div>
 
-                    <div className={'wrapper'}>
+                    <div className={'wrapper results_buttons'}>
                         <button type="button" className="nes-btn is-primary" onClick={this.props.reset}>Return</button>
+                        <button type="button" className="nes-btn is-warning" onClick={this.props.showInfo}>Info</button>
                     </div>
 
                 </section>

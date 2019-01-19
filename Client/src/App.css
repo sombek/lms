@@ -1,3 +1,8 @@
+.App, #root {
+    height: 100%;
+    width: 100%;
+}
+
 body, code, html, kbd, pre, samp {
     font-family: Press Start\ 2P !important;
 }
@@ -20,8 +25,6 @@ body, code, html, kbd, pre, samp {
     box-shadow: 0 4px #212529, 0 -4px #212529, 4px 0 #212529, -4px 0 #212529;
     -webkit-appearance: none;
 }
-
-
 .overlay {
     position: absolute;
     top: 0;
@@ -31,6 +34,7 @@ body, code, html, kbd, pre, samp {
     z-index: 10;
     background-color: rgba(0, 0, 0, 0.5); /*dim the background*/
 }
+
 
 .wrapper {
     text-align: center;
@@ -62,9 +66,15 @@ body, code, html, kbd, pre, samp {
     display: flex !important;
 }
 
-.App, #root {
-    height: 100%;
-    width: 100%;
+.infoMessage {
+    width: 265px;
+    position: absolute !important;
+    bottom: 5px;
+    right: 20px;
+    display: flex !important;
+    background-color: #f2c409 !important;
+
+
 }
 
 .nes-table {
@@ -81,4 +91,73 @@ body, code, html, kbd, pre, samp {
 
 .hidden {
     display: none !important;
+}
+
+.nes-container.with-title.results img {
+    margin-top: 10px;
+}
+.results_buttons button {
+    margin: 10px;
+}
+
+/* Portrait 6s */
+@media only screen
+and (min-device-width: 375px)
+and (max-device-width: 667px)
+and (-webkit-min-device-pixel-ratio: 2)
+and (orientation: portrait) {
+    * {
+        font-size: 8pt;
+    }
+
+    .nes-container.with-title {
+        padding: 60px;
+    }
+
+    .nes-container.with-title.results {
+        padding: 2rem 30px 30px;
+    }
+
+
+    .uni {
+        margin-top: 10px;
+        height: 90px;
+        margin-bottom: 20px;
+    }
+}
+
+input[type="color"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+input[type="week"],
+select:focus,
+textarea {
+    font-size: 16px;
+}
+
+/* Portrait SE */
+@media screen and (device-aspect-ratio: 40/71) {
+    * {
+        font-size: 8pt;
+    }
+
+    .nes-container.with-title {
+        padding: 25px;
+    }
+
+    .uni {
+        margin-top: 10px;
+        height: 90px;
+    }
+
 }

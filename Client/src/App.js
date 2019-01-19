@@ -3,8 +3,8 @@ import './App.css';
 import 'nes.css/css/nes.min.css'
 
 import axios from 'axios';
-import Login from './Login'
 import Results from "./Results";
+import Login from "./Login";
 
 
 class App extends Component {
@@ -15,8 +15,88 @@ class App extends Component {
         university: '',
         showLoading: false,
         student: false,
+        // student: {
+        //     name: 'Abdullah Hashim',
+        //     results: [
+        //         {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         }, {
+        //             courseName: 'abc',
+        //             hours: '13',
+        //             percentage: '3'
+        //         },
+        //     ],
+        //     university: 'RCYCI'
+        // },
         error: false,
         showError: false,
+        showInfo: false,
     };
 
     fetchData = () => {
@@ -74,6 +154,8 @@ class App extends Component {
     };
 
     reset = () => this.setState({student: undefined});
+    showInfo = () => this.setState({showInfo: true});
+    closeInfo = () => this.setState({showInfo: false});
 
     render() {
         return (
@@ -82,6 +164,7 @@ class App extends Component {
                 {
                     this.state.student ?
                         <Results student={this.state.student}
+                                 showInfo={this.showInfo}
                                  reset={this.reset}
                         />
                         : <Login updateUsername={this.updateUsername}
@@ -97,11 +180,24 @@ class App extends Component {
                 <div className={`nes-balloon from-right message ${this.state.showError ? '' : 'hidden'}`}>
                     <p>
                         {this.state.error}
+                        <br/>
                         <img src="https://orig00.deviantart.net/f028/f/2014/221/5/4/signal_by_pavanz-d7uhv5q.gif"
-                             width={100} alt={'gif'}/>
+                             width={80} alt={'gif'}/>
                     </p>
                     <div style={{textAlign: 'right'}}>
                         <button type="button" className="nes-btn is-error" onClick={this.closeMessage}>X</button>
+                    </div>
+                </div>
+
+                <div className={`nes-balloon from-right infoMessage ${this.state.showInfo ? '' : 'hidden'}`}>
+                    <p>
+                        Thanks for using this app
+                        For more click on github
+                        <i className="nes-octocat" onClick={() => window.open('https://github.com/sombek')}/>
+                    </p>
+
+                    <div style={{textAlign: 'right'}}>
+                        <button type="button" className="nes-btn is-error" onClick={this.closeInfo}>X</button>
                     </div>
                 </div>
             </div>

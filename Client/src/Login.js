@@ -2,12 +2,46 @@ import React, {Component} from 'react';
 import './App.css'
 
 class Login extends Component {
-
-    state = {
-        loadingImages: []
-    };
+    loadingImages = [
+        {
+            url: 'https://media.giphy.com/media/gx54W1mSpeYMg/giphy.gif',
+            width: 100
+        },{
+            url: 'https://media.giphy.com/media/qzPH01HCx1n8I/giphy.gif',
+            width: 100
+        },{
+            url: 'https://media.giphy.com/media/ukMiDlCmdv2og/giphy.gif',
+            width: 100
+        },{
+            url: 'https://media.giphy.com/media/K37u4P7MLoJfW/giphy.gif',
+            width: 200
+        },{
+            url: 'https://media.giphy.com/media/IPbS5R4fSUl5S/giphy.gif',
+            width: 200
+        },{
+            url: 'https://media.giphy.com/media/HPF6ivflFs7U4/giphy.gif',
+            width: 150
+        },{
+            url: 'https://media.giphy.com/media/JcZzoAcTjUZ2/giphy.gif',
+            width: 150
+        },{
+            url: 'https://media.giphy.com/media/l2Je66zG6mAAZxgqI/giphy.gif',
+            width: 150
+        },{
+            url: 'https://media.giphy.com/media/l2RbeHTkknU52SfPq/giphy.gif',
+            width: 150
+        },{
+            url: 'https://media.giphy.com/media/3oz8xOJiQ9VtnOKAIU/giphy.gif',
+            width: 150
+        },{
+            url: 'https://media.giphy.com/media/26AHG5KGFxSkUWw1i/giphy.gif',
+            width: 150
+        },
+    ];
 
     render() {
+        const img = this.loadingImages[Math.floor(Math.random() * this.loadingImages.length)];
+        // const img = this.loadingImages[10];
         return (
             <>
                 <section className={`nes-container with-title login-container`}>
@@ -17,11 +51,12 @@ class Login extends Component {
                         <h6>Attendance Checker Application</h6>
                         <div className={'wrapper'}>
                             <img
-                                src="https://thumbs.gfycat.com/HopefulShockedBarracuda-small.gif"
-                                width={100} alt={'gif'}/>
+                                src={img.url}
+                                width={img.width}
+                                height={90} alt={'gif'}/>
                         </div>
 
-                        <section className="nes-container with-title">
+                        <section className="nes-container with-title uni">
                             <h2 className="title">Select Uni</h2>
                             <div>
                                 <label>
@@ -61,7 +96,7 @@ class Login extends Component {
 
                 <section className="nes-container is-rounded loading-container" hidden={!this.props.showLoading}>
                     <h5>Loading</h5>
-                    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/92b69c22219753.5630ea254987a.gif"
+                    <img src="https://media.giphy.com/media/MJTOHmGiGPHgI/giphy.gif"
                          alt="" width={160}/>
                 </section>
             </>
