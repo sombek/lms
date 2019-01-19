@@ -39,9 +39,17 @@ class Login extends Component {
         },
     ];
 
+
+    img = {
+        url: '',
+        width: 100
+    };
+
+    componentDidMount() {
+        this.img = this.loadingImages[Math.floor(Math.random() * this.loadingImages.length)];
+    }
+
     render() {
-        const img = this.loadingImages[Math.floor(Math.random() * this.loadingImages.length)];
-        // const img = this.loadingImages[10];
         return (
             <>
                 <section className={`nes-container with-title login-container`}>
@@ -51,8 +59,8 @@ class Login extends Component {
                         <h6>Attendance Checker Application</h6>
                         <div className={'wrapper'}>
                             <img
-                                src={img.url}
-                                width={img.width}
+                                src={this.img.url}
+                                width={this.img.width}
                                 height={90} alt={'gif'}/>
                         </div>
 

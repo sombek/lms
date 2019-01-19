@@ -7,12 +7,10 @@ class Results extends Component {
         {
             url: 'http://rs746.pbsrc.com/albums/xx106/Zukato-sama/1lg106Buzz.gif~c200',
             width: 100
-        },
-        {
+        }, {
             url: 'http://rs794.pbsrc.com/albums/yy222/toystoryftw/Misc%20Toy%20Story/1385242ovj38uen07.gif~c200',
             width: 100
-        },
-        {
+        }, {
             url: 'https://www.gifmania.co.uk/Walt-Disney-Animated-Gifs/Animated-Pixar-Movies/Toy-Story/Buzz-Little-Green-Men-82984.gif',
             width: 100
         }, {
@@ -36,10 +34,18 @@ class Results extends Component {
         },
     ];
 
+    img = {
+        url: '',
+        width: 100
+    };
+
+    componentDidMount() {
+        this.img = this.loadingImages[Math.floor(Math.random() * this.loadingImages.length)];
+    }
+
     render() {
         const {name, results, university} = this.props.student;
-        const img = this.loadingImages[Math.floor(Math.random() * this.loadingImages.length)];
-        // const img = this.loadingImages[8];
+
         return (
             <>
                 <section className="nes-container with-title login-container results">
@@ -47,8 +53,8 @@ class Results extends Component {
 
                     <div className={'wrapper'}>
                         <img
-                            src={img.url}
-                            width={img.width}
+                            src={this.img.url}
+                            width={this.img.width}
                             height={100} alt={'gif'}/>
                     </div>
                     <div className="nes-table-responsive table">
