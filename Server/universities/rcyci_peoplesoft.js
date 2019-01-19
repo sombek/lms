@@ -63,7 +63,7 @@ module.exports = {
                     let unique_courses = courses;
                     courses = courses.map((course) => course.courseName);
                     for (const stu_course of student.courses)
-                        if (!courses.includes(stu_course))
+                        if (!courses.includes(stu_course.trim()))
                             unique_courses.push({
                                 courseName: stu_course,
                                 hours: 0,
