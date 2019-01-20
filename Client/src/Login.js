@@ -45,9 +45,10 @@ class Login extends Component {
         width: 100
     };
 
-    componentDidMount() {
+    componentWillMount() {
         this.img = this.loadingImages[Math.floor(Math.random() * this.loadingImages.length)];
     }
+
 
     render() {
         return (
@@ -58,10 +59,9 @@ class Login extends Component {
 
                         <h6>Attendance Checker Application</h6>
                         <div className={'wrapper'}>
-                            <img
-                                src={this.img.url}
-                                width={this.img.width}
-                                height={90} alt={'gif'}/>
+                            <img src={this.img.url}
+                                 width={this.img.width}
+                                 height={90} alt={'gif'}/>
                         </div>
 
                         <section className="nes-container with-title uni">

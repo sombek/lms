@@ -39,7 +39,7 @@ class Results extends Component {
         width: 100
     };
 
-    componentDidMount() {
+    componentWillMount() {
         this.img = this.loadingImages[Math.floor(Math.random() * this.loadingImages.length)];
     }
 
