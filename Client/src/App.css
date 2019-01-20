@@ -100,6 +100,10 @@ body, code, html, kbd, pre, samp {
     margin: 10px;
 }
 
+.nes-container.with-title > .title {
+    margin: -2.2rem 0 1rem;
+}
+
 /* Portrait 6s */
 @media only screen
 and (min-device-width: 375px)
@@ -111,7 +115,8 @@ and (orientation: portrait) {
     }
 
     .nes-container.with-title {
-        padding: 60px;
+        padding: 2rem 60px 60px;
+
     }
 
     .nes-container.with-title.results {
@@ -119,10 +124,14 @@ and (orientation: portrait) {
     }
 
 
-    .uni {
+    .nes-container.with-title.uni {
         margin-top: 10px;
         height: 90px;
         margin-bottom: 20px;
+        padding: 2rem;
+    }
+    .nes-container.with-title > .title {
+        margin: -1.9rem 0 1rem !important;
     }
 }
 
