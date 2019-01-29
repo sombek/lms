@@ -102,10 +102,13 @@ class Login extends Component {
 
                 <div className={`${this.props.showLoading ? 'overlay' : ''}`}/>
 
-                <section className="nes-container is-rounded loading-container" hidden={!this.props.showLoading}>
+                <section className="nes-container is-rounded loading-container" hidden={this.props.showLoading}>
                     <h5>Loading</h5>
                     <img src="https://media.giphy.com/media/MJTOHmGiGPHgI/giphy.gif"
                          alt="" width={160}/>
+
+                    <p style={{fontSize: '6pt', marginTop: 5}}>There is a delay in SIS usually it takes 33s to be
+                        done</p>
                 </section>
             </>
         );
