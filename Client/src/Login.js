@@ -33,10 +33,11 @@ class Login extends Component {
         },{
             url: 'https://media.giphy.com/media/3oz8xOJiQ9VtnOKAIU/giphy.gif',
             width: 150
-        },{
-            url: 'https://media.giphy.com/media/26AHG5KGFxSkUWw1i/giphy.gif',
-            width: 150
         },
+        // {
+        //     url: 'https://media.giphy.com/media/26AHG5KGFxSkUWw1i/giphy.gif',
+        //     width: 150
+        // },
     ];
 
 
@@ -76,7 +77,7 @@ class Login extends Component {
                                 <label>
                                     <input type="radio" className="nes-radio" name={'university'} value={'EFFAT'}
                                            onChange={this.props.setUni.bind(this)}/>
-                                    <span>EFFAT</span>
+                                    <span>Other</span>
                                 </label>
                             </div>
                         </section>
@@ -85,11 +86,11 @@ class Login extends Component {
                         <div className="nes-field">
                             <label htmlFor="name_field">Username</label>
                             <input type="text" onChange={this.props.updateUsername} value={this.props.username}
-                                   className="nes-input"/>
+                                   className="nes-input" autoComplete="off"/>
 
                             <label htmlFor="name_field">Password</label>
                             <input type="password" onChange={this.props.updatePassword} value={this.props.password}
-                                   className="nes-input"/>
+                                   className="nes-input" autoComplete="off"/>
                         </div>
 
                         <br/>
@@ -102,7 +103,7 @@ class Login extends Component {
 
                 <div className={`${this.props.showLoading ? 'overlay' : ''}`}/>
 
-                <section className="nes-container is-rounded loading-container" hidden={this.props.showLoading}>
+                <section className="nes-container is-rounded loading-container" hidden={!this.props.showLoading}>
                     <h5>Loading</h5>
                     <img src="https://media.giphy.com/media/MJTOHmGiGPHgI/giphy.gif"
                          alt="" width={160}/>

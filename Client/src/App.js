@@ -12,88 +12,9 @@ class App extends Component {
     state = {
         user: '',
         password: '',
-        university: '',
+        university: 'RCYCI',
         showLoading: false,
         student: false,
-        // student: {
-        //     name: 'Abdullah Hashim',
-        //     results: [
-        //         {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         }, {
-        //             courseName: 'abc',
-        //             hours: '13',
-        //             percentage: '3'
-        //         },
-        //     ],
-        //     university: 'RCYCI'
-        // },
         error: false,
         showError: false,
         showInfo: false,
@@ -102,7 +23,7 @@ class App extends Component {
     fetchData = () => {
         if (this.state.user && this.state.password && this.state.university)
             this.setState({showLoading: true}, () => {
-                axios.post(`https://updullah.me:4000`, {
+                axios.post(`http://localhost:4000`, {
                     user: this.state.user,
                     password: this.state.password,
                     university: this.state.university

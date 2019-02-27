@@ -6,6 +6,13 @@ const path = require('path');
 
 const app = express();
 app.use(express.static('build'));
+
+app.use(express.static('portfolio'));
+
+app.get('/portfolio', function (req, res) {
+    return res.sendfile("./Client/portfolio/index.html");
+});
+
 app.get('/', function (req, res) {
     return res.end('<p>Sorry :( I\'m working on it</p>');
 });

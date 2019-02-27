@@ -32,14 +32,6 @@ app.get('/', function (req, res) {
     return res.send('Done')
 });
 
-app.use(express.static('./Server/portfolio'));
-
-
-app.get('/portfolio', function (req, res) {
-    return res.sendfile("./Server/portfolio/index.html");
-});
-
-
 app.post('/', function (req, res) {
     let start = performance.now();
     // const cached_student = db_ops.getStudent(req.body.user);
