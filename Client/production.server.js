@@ -10,7 +10,7 @@ app.use(express.static('build'));
 app.use(express.static('portfolio'));
 
 app.get('/portfolio', function (req, res) {
-    return res.sendfile("./Client/portfolio/index.html");
+    return res.sendFile("portfolio/index.html");
 });
 
 app.get('/', function (req, res) {
