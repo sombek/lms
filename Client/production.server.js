@@ -8,7 +8,7 @@ const app = express();
 app.use(express.static('nodePublic'));
 
 app.get('/portfolio', function (req, res) {
-    return res.sendfile("./nodePublic/portfolio/portfolio/index.html");
+    return res.sendfile("./nodePublic/portfolio/index.html");
 });
 
 app.get('/', function (req, res) {
