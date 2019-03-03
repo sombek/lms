@@ -8,8 +8,16 @@ Regarding the shown output the output is make perfect sense which the parent pro
 
 
 # Exercise (3.2)
-The following code produces 4 process including the parent process.
-![alt text](https://i.ibb.co/0hdQRYx/CS480-Assignment.png)
+The following code produces 8 process including the parent process.
+``` c
+/* fork a child process */
+fork(); // New processes shown in Green 
+/* fork another child process */
+fork(); // New processes shown in Yellow
+/* and fork another */
+fork(); // New processes shown in Purpule
+```
+![alt text](https://i.ibb.co/NNJwJxw/CS480-Assignment-2x-1.png)
 
 # Exercise (4.17)
 The output:
